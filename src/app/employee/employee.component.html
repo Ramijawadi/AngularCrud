@@ -1,75 +1,80 @@
+<nav class="bg-gray-400 p-4 shadow-lg flex justify-between items-center">
+    <div class="text-white font-bold text-xl">Employees App</div>
+    <input 
+      class="form-control p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600" 
+      type="text" 
+      name="firstName" 
+      [(ngModel)]="firstName" 
+      (ngModelChange)="Search()" 
+      placeholder="Search ..."
+    >
+</nav>
+
 <div class="min-h-screen flex items-center justify-center">
-    <div class="bg-gray-200 dark:bg-slate-800 p-6 rounded-lg shadow-md w-1/2 mt-5">
-
-
+    <div class="bg-gray-200 dark:bg-slate-800 p-6 rounded-lg shadow-md w-1/2 m-5 w-full">
         <div class="relative overflow-x-auto">
-
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-
-
                     <tr>
-                        <th scope="col" class="px-6 py-3">
-                            ID
-
+                        <th (click)="sort('id')" scope="col" class="px-6 py-3">
+                            ID&nbsp;
+                            <i class="fa fa-sort"></i>
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th (click)="sort('firstName')" scope="col" class="px-6 py-3">
                             FirstName
-
+                        </th>
+                        <th (click)="sort('lastName')" scope="col" class="px-6 py-3">
+                            LastName
+                        </th>
+                        <th (click)="sort('email')" scope="col" class="px-6 py-3">
+                            Email
                         </th>
                         <th scope="col" class="px-6 py-3">
-                                LastName
-    
-                            </th>
-
-                            <th scope="col" class="px-6 py-3">
-                                Email
-        
-                                </th>
-
+                            Image
+                        </th>
+                        <th (click)="sort('address')" scope="col" class="px-6 py-3">
+                            Address
+                        </th>
+                        <th (click)="sort('salary')" scope="col" class="px-6 py-3">
+                            Salary
+                        </th>
+                        <th (click)="sort('contactNumber')" scope="col" class="px-6 py-3">
+                            Contact Number
+                        </th>
                     </tr>
-
-
                 </thead>
-
-              <tbody>
-              @for (employee of employees; track employee.id) {
-
-
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {{ employee.id }}
-
-                </th>
-          
-             <td class="px-6 py-4">
-                {{ employee.firstName}}
-                    </td>
-                    <td class="px-6 py-4">
-                        {{ employee.lastName}}
-                            </td>
-
-             <td class="px-6 py-4">
-            {{ employee.email}}
-                </td>
-            </tr>
-
-              }
-
-              @empty {
-                <h3 class="text-green-500">No empplyees</h3>
-              }
-
-              </tbody>
+                <tbody>
+                    <tr *ngFor="let employee of employees"   class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ employee.id }}
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ employee.firstName }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ employee.lastName }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ employee.email }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ employee.imageUrl }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ employee.address }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ employee.salary }}
+                        </td>
+                        <td class="px-6 py-4">
+                            {{ employee.contactNumber }}
+                        </td>
+                    </tr>
+                    <tr *ngIf="!employees.length">
+                        <td colspan="8" class="text-center text-green-500">No employees</td>
+                    </tr>
+                </tbody>
             </table>
-
-
         </div>
-
     </div>
-
-
-
 </div>
