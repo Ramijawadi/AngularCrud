@@ -1,0 +1,75 @@
+<div class="min-h-screen flex items-center justify-center">
+    <div class="bg-gray-200 dark:bg-slate-800 p-6 rounded-lg shadow-md w-1/2 mt-5">
+
+
+        <div class="relative overflow-x-auto">
+
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+
+
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            ID
+
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            FirstName
+
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                                LastName
+    
+                            </th>
+
+                            <th scope="col" class="px-6 py-3">
+                                Email
+        
+                                </th>
+
+                    </tr>
+
+
+                </thead>
+
+              <tbody>
+              @for (employee of employees; track employee.id) {
+
+
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{ employee.id }}
+
+                </th>
+          
+             <td class="px-6 py-4">
+                {{ employee.firstName}}
+                    </td>
+                    <td class="px-6 py-4">
+                        {{ employee.lastName}}
+                            </td>
+
+             <td class="px-6 py-4">
+            {{ employee.email}}
+                </td>
+            </tr>
+
+              }
+
+              @empty {
+                <h3 class="text-green-500">No empplyees</h3>
+              }
+
+              </tbody>
+            </table>
+
+
+        </div>
+
+    </div>
+
+
+
+</div>
