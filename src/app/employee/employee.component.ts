@@ -5,11 +5,12 @@ import { FormsModule } from '@angular/forms';
 // import { ConvertToSpacesPipe } from './shared/convert-to-spaces.pipe'; // <-- Add this
 import {Ng2OrderModule} from 'ng2-order-pipe'
 import {Ng2SearchPipeModule} from 'ng2-search-filter'
+import { FilterPipe } from "../filter.pipe";
 
 @Component({
   selector: 'app-employee',
   standalone: true,
-  imports: [FormsModule , NgFor ,NgIf ],
+  imports: [FormsModule, NgFor, NgIf, FilterPipe],
   templateUrl: './employee.component.html',
   styleUrl: './employee.component.css'
 })
@@ -18,6 +19,7 @@ export class EmployeeComponent implements OnInit{
   http = inject(HttpClient) ;
   employees : any = []
   firstName : any ;
+  searchText : any ;
 
   ngOnInit(): void {
     this.fetchEmployees();

@@ -1,13 +1,22 @@
 <nav class="bg-gray-400 p-4 shadow-lg flex justify-between items-center">
     <div class="text-white font-bold text-xl">Employees App</div>
-    <input 
+    <!-- <input 
       class="form-control p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600" 
       type="text" 
       name="firstName" 
       [(ngModel)]="firstName" 
       (ngModelChange)="Search()" 
       placeholder="Search ..."
-    >
+    > -->
+    <input 
+    class="form-control p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600" 
+    type="search"
+    id="form1" 
+  
+    [(ngModel)]="searchText" 
+    placeholder="Search ..."
+    aria-label="Search ..."
+  />
 </nav>
 
 <div class="min-h-screen flex items-center justify-center">
@@ -44,7 +53,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr *ngFor="let employee of employees"   class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <tr *ngFor="let employee of employees|filter:searchText"   class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ employee.id }}
                         </th>
