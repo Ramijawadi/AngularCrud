@@ -41,6 +41,9 @@ export class EmployeeComponent implements OnInit {
     });
   }
 
+
+  //Get all items 
+  
   fetchEmployees() {
     this.http
       .get('https://retoolapi.dev/HYd96h/data')
@@ -54,6 +57,7 @@ add(){
 
 
 }
+//Create Item
 
 addEmployee(){
 
@@ -85,27 +89,18 @@ error => {
 }
 
 
-//get
+//remove items
 
-// getEmployee(){
 
-//   this.api.getEmployee().subscribe(res=> {
-//  this.allEmployees = res ;
+removeUser(id:string): void{ 
+   if(confirm('are you sure to delete !'))
 
-//   })
-// }
-
-//delete
-
-deleteEmployee(data:any) {
-if(confirm('are you sure to delete !'))
-  this.api.deleteEmployee(data.id)
-  .subscribe(res=> {
-    alert('record deleted successfully !');
-    this.fetchEmployees()
-  })
-
+  this.employees = this.employees.filter((employee: { id: string; }) => employee.id !== id)
 }
+
+
+
+//Global search 
 
   Search() {
     if (this.firstName == '') {

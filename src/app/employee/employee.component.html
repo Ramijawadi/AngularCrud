@@ -82,8 +82,7 @@
                         </td>
 
                         <td class="px-6 py-4">
-                            <button type="button" class="btn btn-danger" >Delete </button>
-
+                            <button type="button" class="btn btn-danger" (click)="removeUser(employee.id)">Delete </button>
                         </td>
                     </tr>
                     <tr *ngIf="!employees.length">

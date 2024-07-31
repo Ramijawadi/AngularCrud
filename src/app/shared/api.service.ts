@@ -12,9 +12,9 @@ export class ApiService {
 
   //post employee
 
-  postEmployee(data:any) {
+  postEmployee(employee:any) {
     
-return this._http.post<any>("https://retoolapi.dev/HYd96h/data",data).
+return this._http.post<any>("https://retoolapi.dev/HYd96h/data",employee).
 pipe(map((res:any)=> {
 
   return res ;
@@ -39,7 +39,7 @@ pipe(map((res:any)=> {
 
   deleteEmployee(id:number) {
 
-    return this._http.delete("https://retoolapi.dev/HYd96h/data"+id).
+    return this._http.delete<any>("https://retoolapi.dev/HYd96h/data/"+id).
     pipe(map((res:any)=> {
 
       return res ;
