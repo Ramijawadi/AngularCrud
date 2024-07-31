@@ -6,11 +6,12 @@ import { FilterPipe } from '../filter.pipe';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Employee } from './employee.model';
 import { ApiService } from '../shared/api.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @Component({
   selector: 'app-employee',
   standalone: true,
-  imports: [FormsModule, NgFor, NgIf, FilterPipe,ReactiveFormsModule],
+  imports: [FormsModule, NgFor, NgIf, FilterPipe,ReactiveFormsModule ,NgxPaginationModule],
   templateUrl: './employee.component.html',
   styleUrl: './employee.component.css',
 })
@@ -22,6 +23,8 @@ export class EmployeeComponent implements OnInit {
   employeeObj:Employee = new Employee()
   formValue!: FormGroup;
   allEmployees : any;
+
+  p: number = 1; // Current page number
 
   constructor(private formBuilder: FormBuilder , private api:ApiService) {}
 
@@ -43,7 +46,7 @@ export class EmployeeComponent implements OnInit {
 
 
   //Get all items 
-  
+
   fetchEmployees() {
     this.http
       .get('https://retoolapi.dev/HYd96h/data')
@@ -92,7 +95,7 @@ error => {
 //remove items
 
 
-removeUser(id:string): void{ 
+removeEmployee(id:string): void{ 
    if(confirm('are you sure to delete !'))
 
   this.employees = this.employees.filter((employee: { id: string; }) => employee.id !== id)

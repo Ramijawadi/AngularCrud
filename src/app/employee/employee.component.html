@@ -1,5 +1,5 @@
-<nav class="bg-gray-400 p-4 shadow-lg flex justify-between items-center">
-    <div class="text-white font-bold text-xl">Employees App</div>
+<nav class="dark:bg-slate-300 p-4 shadow-lg flex justify-between items-center">
+    <div class="text-black font-bold text-xl">Employees App</div>
     <!-- <input 
       class="form-control p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600" 
       type="text" 
@@ -16,12 +16,12 @@
 
 
 <div class="min-h-screen flex items-center justify-center">
-    <div class="bg-gray-200 dark:bg-slate-800 p-6 rounded-lg shadow-md w-1/2 m-5 w-full">
+    <div class="bg-gray-200 dark:bg-slate-300 p-6 rounded-lg shadow-md w-1/2 m-5 w-full">
         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="add()" >New Employee </button> <br/><br/>
 
         <div class="relative overflow-x-auto">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-black-400">
+                <thead  class="text-xs text-gray-700 uppercase bg-gray-500 dark:bg-gray-600  dark:text-gray-300">
                     <tr>
                         <th (click)="sort('id')" scope="col" class="px-6 py-3">
                             ID&nbsp;
@@ -55,7 +55,7 @@
 
                 </thead>
                 <tbody>
-                    <tr *ngFor="let employee of employees|filter:searchText"   class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <tr *ngFor="let employee of employees|filter:searchText | paginate: { itemsPerPage: 10, currentPage: p }">
                         <th scope="row" class="px-6 py-4 font-medium">
                             {{ employee.id }}
                         </th>
@@ -82,7 +82,7 @@
                         </td>
 
                         <td class="px-6 py-4">
-                            <button type="button" class="btn btn-danger" (click)="removeUser(employee.id)">Delete </button>
+                            <button type="button" class="btn btn-danger" (click)="removeEmployee(employee.id)">Delete </button>
                         </td>
                     </tr>
                     <tr *ngIf="!employees.length">
@@ -92,13 +92,14 @@
             </table>
 
 
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
 
  <!-- Modal -->
  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog custom-modal-width">
       <div class="modal-content">
-        <div style="background:rgb(231, 130, 130);" class="modal-header">
-          <h1 style="color: rgb(247, 248, 250); font-size: 20px; margin-left:62px;font-weight:620;" class="modal-title fs-5" id="exampleModalLabel">Create New Employee</h1>
+        <div style="background:rgb(203 213 225 / var(--tw-bg-opacity));" class="modal-header">
+          <h1 style="color: rgb(111, 120, 139); font-size: 20px; margin-left:55px;font-weight:620;" class="modal-title fs-5" id="exampleModalLabel">Create New Employee</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -183,8 +184,8 @@
   
 
 </div>
-<div style="background: rgb(231, 130, 130);" class="modal-footer">
-  <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Close</button>
+<div style="background:rgb(203 213 225 / var(--tw-bg-opacity));" class="modal-footer">
+  <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
   <button type="button" class="btn btn-success" (click)="addEmployee()">Add</button>
   <!-- <button type="button" class="btn btn-success">Add</button> -->
 
