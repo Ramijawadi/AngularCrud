@@ -1,6 +1,8 @@
 <nav class="dark:bg-slate-300 p-4 shadow-lg flex justify-between items-center">
-    <div class="text-black font-bold text-xl">Employees App</div>
-    <!-- <input 
+  <div class="text-black font-bold text-xl">
+    <img src="/images/employe.png" height="20px" width="100px" alt="logo" />
+  </div>
+  <!-- <input 
       class="form-control p-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-600" 
       type="text" 
       name="firstName" 
@@ -9,193 +11,404 @@
       placeholder="Search ..."
     > -->
 
-    <input class="w-40 form-control focus form-control-sm" type="search"  placeholder="Search ..." aria-label="Search..."  id="form1" 
-  
-    [(ngModel)]="searchText" >
+  <div class="input-group w-40">
+    <span class="input-group-text">
+      <i class="bi bi-search"></i>
+    </span>
+    <input
+      class="form-control focus form-control-sm"
+      type="search"
+      placeholder="Search ..."
+      aria-label="Search..."
+      id="form1"
+      [(ngModel)]="searchText"
+    />
+  </div>
 </nav>
 
-
 <div class="min-h-screen flex items-center justify-center">
-    <div class="bg-gray-200 dark:bg-slate-300 p-6 rounded-lg shadow-md w-1/2 m-5 w-full">
-        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="add()" >New Employee </button> <br/><br/>
+  <div
+    class="bg-gray-200 dark:bg-slate-300 p-6 rounded-lg shadow-md w-1/2 m-5 w-full"
+  >
+    <button
+      type="button"
+      class="btn btn-success mb-3"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+      (click)="add()"
+    >
+      <i class="bi bi-plus-lg"></i> New Employee
+    </button>
+    <div class="relative overflow-x-auto">
+      <table
+        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-black-400"
+      >
+        <thead
+          class="text-xs text-gray-700 uppercase bg-gray-500 dark:bg-gray-600 dark:text-gray-300"
+        >
+          <tr>
+            <th (click)="sort('id')" scope="col" class="px-6 py-3">
+              ID&nbsp;
+              <i class="fa fa-sort"></i>
+            </th>
+            <th (click)="sort('firstName')" scope="col" class="px-6 py-3">
+              FirstName
+            </th>
+            <th (click)="sort('lastName')" scope="col" class="px-6 py-3">
+              LastName
+            </th>
+            <th (click)="sort('email')" scope="col" class="px-6 py-3">Email</th>
+            <th scope="col" class="px-6 py-3">Image</th>
+            <th (click)="sort('address')" scope="col" class="px-6 py-3">
+              Address
+            </th>
+            <th (click)="sort('salary')" scope="col" class="px-6 py-3">
+              Salary
+            </th>
+            <th (click)="sort('contactNumber')" scope="col" class="px-6 py-3">
+              Contact Number
+            </th>
+            <th (click)="sort('contactNumber')" scope="col" class="px-6 py-3">
+              Actions
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="
+              let employee of employees
+                | filter : searchText
+                | paginate : { itemsPerPage: 10, currentPage: p }
+            "
+          >
+            <th scope="row" class="px-6 py-4 font-medium">
+              {{ employee.id }}
+            </th>
+            <td class="px-6 py-4">
+              {{ employee.firstName }}
+            </td>
+            <td class="px-6 py-4">
+              {{ employee.lastName }}
+            </td>
+            <td class="px-6 py-4">
+              {{ employee.email }}
+            </td>
+            <td class="px-6 py-4">
+              {{ employee.imageUrl }}
+            </td>
+            <td class="px-6 py-4">
+              {{ employee.address }}
+            </td>
+            <td class="px-6 py-4">
+              {{ employee.salary }}
+            </td>
+            <td class="px-6 py-4">
+              {{ employee.contactNumber }}
+            </td>
 
-        <div class="relative overflow-x-auto">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-black-400">
-                <thead  class="text-xs text-gray-700 uppercase bg-gray-500 dark:bg-gray-600  dark:text-gray-300">
-                    <tr>
-                        <th (click)="sort('id')" scope="col" class="px-6 py-3">
-                            ID&nbsp;
-                            <i class="fa fa-sort"></i>
-                        </th>
-                        <th (click)="sort('firstName')" scope="col" class="px-6 py-3">
-                            FirstName
-                        </th>
-                        <th (click)="sort('lastName')" scope="col" class="px-6 py-3">
-                            LastName
-                        </th>
-                        <th (click)="sort('email')" scope="col" class="px-6 py-3">
-                            Email
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Image
-                        </th>
-                        <th (click)="sort('address')" scope="col" class="px-6 py-3">
-                            Address
-                        </th>
-                        <th (click)="sort('salary')" scope="col" class="px-6 py-3">
-                            Salary
-                        </th>
-                        <th (click)="sort('contactNumber')" scope="col" class="px-6 py-3">
-                            Contact Number
-                        </th>
-                        <th (click)="sort('contactNumber')" scope="col" class="px-6 py-3">
-                            Actions
-                        </th>
-                    </tr>
+            <td class="px-6 py-4">
+              <button
+                type="button"
+                class="btn btn-danger"
+                (click)="removeEmployee(employee.id)"
+              >
+                <i class="bi bi-trash"></i> Delete
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="!employees.length">
+            <td colspan="8" class="text-center text-red-500">No employees</td>
+          </tr>
+        </tbody>
+      </table>
 
-                </thead>
-                <tbody>
-                    <tr *ngFor="let employee of employees|filter:searchText | paginate: { itemsPerPage: 10, currentPage: p }">
-                        <th scope="row" class="px-6 py-4 font-medium">
-                            {{ employee.id }}
-                        </th>
-                        <td class="px-6 py-4">
-                            {{ employee.firstName }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ employee.lastName }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ employee.email }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ employee.imageUrl }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ employee.address }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ employee.salary }}
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ employee.contactNumber }}
-                        </td>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
 
-                        <td class="px-6 py-4">
-                            <button type="button" class="btn btn-danger" (click)="removeEmployee(employee.id)">Delete </button>
-                        </td>
-                    </tr>
-                    <tr *ngIf="!employees.length">
-                        <td colspan="8" class="text-center text-red-500">No employees</td>
-                    </tr>
-                </tbody>
-            </table>
+      <!-- Modal -->
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog custom-modal-width">
+          <div class="modal-content">
+            <div
+              style="background: rgb(203 213 225 / var(--tw-bg-opacity))"
+              class="modal-header"
+            >
+              <h1
+                style="
+                  color: rgb(111, 120, 139);
+                  font-size: 20px;
+                  margin-left: 55px;
+                  font-weight: 620;
+                "
+                class="modal-title fs-5"
+                id="exampleModalLabel"
+              >
+                Create New Employee
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <!-- form -->
 
+              <form [formGroup]="formValue">
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="mb-3">
+                      <label for="exampleInputEmail1" class="form-label"
+                        >ID</label
+                      >
+                      <input
+                        class="form-control"
+                        formControlName="id"
+                        type="text"
+                        readonly
+                      />
+                    </div>
 
-            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                    <div class="mb-3 form-group">
+                      <label for="exampleInputEmail1" class="form-label"
+                        >Age</label
+                      >
+                      <input
+                        type="text"
+                        formControlName="age"
+                        class="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                        placeholder="enter your age .."
+                      />
+                      <small
+                        *ngIf="
+                          formValue.get('age')?.invalid &&
+                          formValue.get('age')?.touched
+                        "
+                        class="text-danger"
+                        >age is required!</small
+                      >
+                    </div>
 
- <!-- Modal -->
- <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog custom-modal-width">
-      <div class="modal-content">
-        <div style="background:rgb(203 213 225 / var(--tw-bg-opacity));" class="modal-header">
-          <h1 style="color: rgb(111, 120, 139); font-size: 20px; margin-left:55px;font-weight:620;" class="modal-title fs-5" id="exampleModalLabel">Create New Employee</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          
-<!-- form -->
+                    <div class="mb-3 form-group">
+                      <label for="exampleInputEmail1" class="form-label"
+                        >Dob</label
+                      >
+                      <input
+                        type="text"
+                        formControlName="dob"
+                        class="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                        placeholder="enter your date of birth .."
+                      />
+                      <small
+                        *ngIf="
+                          formValue.get('dob')?.invalid &&
+                          formValue.get('dob')?.touched
+                        "
+                        class="text-danger"
+                        >dob is required!</small
+                      >
+                    </div>
+                  </div>
 
+                  <div class="col-md-4">
+                    <div class="mb-3 form-group">
+                      <label for="exampleInputEmail1" class="form-label"
+                        >FirstName</label
+                      >
+                      <input
+                        type="text"
+                        formControlName="firstName"
+                        class="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                        placeholder="enter your first name .."
+                      />
+                      <small
+                        *ngIf="
+                          formValue.get('firstName')?.invalid &&
+                          formValue.get('firstName')?.touched
+                        "
+                        class="text-danger"
+                        >first name is required!</small
+                      >
+                    </div>
 
-<form [formGroup]="formValue">
-    <div class="row">
-      <div class="col-md-4">
-        <div class="mb-3">
-          <label for="exampleInputEmail1" class="form-label">ID</label>
-          <input class="form-control" formControlName="id" type="text" readonly>
-        </div>
-  
-        <div class="mb-3 form-group">
-          <label for="exampleInputEmail1" class="form-label">Age</label>
-          <input type="text" formControlName="age" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="enter your age ..">
-          <small *ngIf="formValue.get('age')?.invalid && formValue.get('age')?.touched" class="text-danger">age is required!</small>
-        </div>
-  
-        <div class="mb-3 form-group">
-          <label for="exampleInputEmail1" class="form-label">Dob</label>
-          <input type="text" formControlName="dob" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="enter your date of birth ..">
-          <small *ngIf="formValue.get('dob')?.invalid && formValue.get('dob')?.touched" class="text-danger">dob is required!</small>
-        </div>
-      </div>
-  
-      <div class="col-md-4">
-        <div class="mb-3 form-group">
-          <label for="exampleInputEmail1" class="form-label">FirstName</label>
-          <input type="text" formControlName="firstName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="enter your first name ..">
-          <small *ngIf="formValue.get('firstName')?.invalid && formValue.get('firstName')?.touched" class="text-danger">first name is required!</small>
-        </div>
-  
-        <div class="mb-3 form-group">
-          <label for="exampleInputEmail1" class="form-label">LastName</label>
-          <input type="text" formControlName="lastName" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="enter your last name ..">
-          <small *ngIf="formValue.get('lastName')?.invalid && formValue.get('lastName')?.touched" class="text-danger">last name is required!</small>
-        </div>
-  
-        <div class="mb-3 form-group">
-          <label for="exampleInputEmail1" class="form-label">Email</label>
-          <input type="email" formControlName="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="enter your email ..">
-          <small *ngIf="formValue.get('email')?.invalid && formValue.get('email')?.touched" class="text-danger">email is required!</small>
-        </div>
-      </div>
-  
-      <div class="col-md-4">
-        <div class="mb-3 form-group">
-          <label for="exampleInputEmail1" class="form-label">Image</label>
-          <input type="text" formControlName="imageUrl" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="enter your image URL ..">
-          <small *ngIf="formValue.get('imageUrl')?.invalid && formValue.get('imageUrl')?.touched" class="text-danger">image URL is required!</small>
-        </div>
-  
-        <div class="mb-3 form-group">
-          <label for="exampleInputEmail1" class="form-label">Adress</label>
-          <input type="text" formControlName="adress" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="enter your address ..">
-          <small *ngIf="formValue.get('adress')?.invalid && formValue.get('adress')?.touched" class="text-danger">address is required!</small>
+                    <div class="mb-3 form-group">
+                      <label for="exampleInputEmail1" class="form-label"
+                        >LastName</label
+                      >
+                      <input
+                        type="text"
+                        formControlName="lastName"
+                        class="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                        placeholder="enter your last name .."
+                      />
+                      <small
+                        *ngIf="
+                          formValue.get('lastName')?.invalid &&
+                          formValue.get('lastName')?.touched
+                        "
+                        class="text-danger"
+                        >last name is required!</small
+                      >
+                    </div>
+
+                    <div class="mb-3 form-group">
+                      <label for="exampleInputEmail1" class="form-label"
+                        >Email</label
+                      >
+                      <input
+                        type="email"
+                        formControlName="email"
+                        class="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                        placeholder="enter your email .."
+                      />
+                      <small
+                        *ngIf="
+                          formValue.get('email')?.invalid &&
+                          formValue.get('email')?.touched
+                        "
+                        class="text-danger"
+                        >email is required!</small
+                      >
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-3 form-group">
+                      <label for="exampleInputEmail1" class="form-label"
+                        >Image</label
+                      >
+                      <input
+                        type="text"
+                        formControlName="imageUrl"
+                        class="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                        placeholder="enter your image URL .."
+                      />
+                      <small
+                        *ngIf="
+                          formValue.get('imageUrl')?.invalid &&
+                          formValue.get('imageUrl')?.touched
+                        "
+                        class="text-danger"
+                        >image URL is required!</small
+                      >
+                    </div>
+
+                    <div class="mb-3 form-group">
+                      <label for="exampleInputEmail1" class="form-label"
+                        >Adress</label
+                      >
+                      <input
+                        type="text"
+                        formControlName="adress"
+                        class="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                        placeholder="enter your address .."
+                      />
+                      <small
+                        *ngIf="
+                          formValue.get('adress')?.invalid &&
+                          formValue.get('adress')?.touched
+                        "
+                        class="text-danger"
+                        >address is required!</small
+                      >
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-4">
+                    <div class="mb-3 form-group">
+                      <label for="exampleInputEmail1" class="form-label"
+                        >Salary</label
+                      >
+                      <input
+                        type="number"
+                        formControlName="salary"
+                        class="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                        placeholder="enter your salary .."
+                      />
+                      <small
+                        *ngIf="
+                          formValue.get('salary')?.invalid &&
+                          formValue.get('salary')?.touched
+                        "
+                        class="text-danger"
+                        >salary is required!</small
+                      >
+                    </div>
+                  </div>
+
+                  <div class="col-md-4">
+                    <div class="mb-3 form-group">
+                      <label for="exampleInputEmail1" class="form-label"
+                        >ContactNumber</label
+                      >
+                      <input
+                        type="number"
+                        formControlName="contactNumber"
+                        class="form-control"
+                        id="exampleInputEmail1"
+                        aria-describedby="emailHelp"
+                        placeholder="enter your number .."
+                      />
+                      <small
+                        *ngIf="
+                          formValue.get('contactNumber')?.invalid &&
+                          formValue.get('contactNumber')?.touched
+                        "
+                        class="text-danger"
+                        >number is required!</small
+                      >
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div
+              style="background: rgb(203 213 225 / var(--tw-bg-opacity))"
+              class="modal-footer"
+            >
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                class="btn btn-success"
+                (click)="addEmployee()"
+              >
+                Add
+              </button>
+              <!-- <button type="button" class="btn btn-success">Add</button> -->
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  
-    <div class="row">
-      <div class="col-md-4">
-        <div class="mb-3 form-group">
-          <label for="exampleInputEmail1" class="form-label">Salary</label>
-          <input type="number" formControlName="salary" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="enter your salary ..">
-          <small *ngIf="formValue.get('salary')?.invalid && formValue.get('salary')?.touched" class="text-danger">salary is required!</small>
-        </div>
-      </div>
-  
-      <div class="col-md-4">
-        <div class="mb-3 form-group">
-          <label for="exampleInputEmail1" class="form-label">ContactNumber</label>
-          <input type="number" formControlName="contactNumber" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="enter your number ..">
-          <small *ngIf="formValue.get('contactNumber')?.invalid && formValue.get('contactNumber')?.touched" class="text-danger">number is required!</small>
-        </div>
-      </div>
-    </div>
-  </form>
-  
-
+  </div>
 </div>
-<div style="background:rgb(203 213 225 / var(--tw-bg-opacity));" class="modal-footer">
-  <button  type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-  <button type="button" class="btn btn-success" (click)="addEmployee()">Add</button>
-  <!-- <button type="button" class="btn btn-success">Add</button> -->
-
-</div>
-</div>
-</div>
-</div>
-
-
-</div>
-</div>
-</div>
-
